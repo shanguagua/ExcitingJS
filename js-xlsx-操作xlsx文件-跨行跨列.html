@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+		<script>
+			function saveAs(obj, fileName) {
+				var tmpa = document.createElement("a");
+				tmpa.download = fileName || "下载";
+				tmpa.href = URL.createObjectURL(obj);
+				tmpa.click();
+				setTimeout(function() {
+					URL.revokeObjectURL(obj);
+				}, 100);
+			}
+			var jsono = [{
+				"id": 1,
+				"合并的列头1": "数据11",
+				"合并的列头2": "数据12",
+				"合并的列头3": "数据13",
+				"合并的列头4": "数据14",
+			}, {
+				"id": 2,
+				"合并的列头1": "数据21",
+				"合并的列头2": "数据22",
+				"合并的列头3": "数据23",
+				"合并的列头4": "数据24",
+			}];
+			const wopts = {
+				bookType: 'xlsx',
+				bookSST: true,
+				type: 'binary'
+			};
+
+			function downloadExl(data, type) {
+				var wb = {
+					SheetNames: ['Sheet1'],
+					Sheets: {},
+					Props: {}
+				};
+				data = XLSX.utils.json_to_sheet(data);
+				data["B1"] = {
+					t: "s",
+					v: "asdad"
+				};
+				data["!merges"] = [{
+					s: {
+						c: 1,
+						r: 0
+					},
+					e: {
+						c: 4,
+						r: 0
+					}
+				}];
+				debugger;
+				wb.Sheets['Sheet1'] = data;
+				saveAs(new Blob([s2ab(XLSX.write(wb, wopts))], {
+					type: "application/octet-stream"
+				}), "这里是下载的文件名" + '.' + (wopts.bookType == "biff2" ? "xls" : wopts.bookType));
+			}
+
+			function s2ab(s) {
+				if(typeof ArrayBuffer !== 'undefined') {
+					var buf = new ArrayBuffer(s.length);
+					var view = new Uint8Array(buf);
+					for(var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+					return buf;
+				} else {
+					var buf = new Array(s.length);
+					for(var i = 0; i != s.length; ++i) buf[i] = s.charCodeAt(i) & 0xFF;
+					return buf;
+				}
+			}
+		</script>
+		<button onclick="downloadExl(jsono)">导出</button>
+	</body>
+
+</html>
