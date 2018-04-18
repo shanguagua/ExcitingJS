@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8" name="author" content="https://www.shanzhonglei.com/"/>
-		<title>阻止事件冒泡和默认事件</title>
+		<title>阻止事件冒泡,不阻止默认行为</title>
 		<style type="text/css">
 			.container {
 				width: 100%;
@@ -27,11 +27,10 @@
 			<a id="shanguagua" href="https://www.shanzhonglei.com/" target="_blank" style="margin: 20px;">山呱呱</a>  
 		</div>
 		<div class="result">
-			<p><<<——不阻止事件冒泡,阻止默认行为——>>></p>
-			<p>点击连接后:<br>1、链接不会跳转；2、父容器事件会被触发</p>
+			<p><<<——阻止事件冒泡,不阻止默认行为——>>></p>
+			<p>点击连接后:<br>1、链接会跳转；2、父容器事件不会被触发</p>
 			<ul id="result"></ul>
 		</div>
-		<script type="text/javascript" src="../../src/js/jquery.1.11.3.min.js" ></script>
 		<script type="text/javascript">
 			var father = document.getElementById('father');
 			var result = document.getElementById('result');
@@ -44,13 +43,17 @@
 				result.appendChild(para);
 			})
 			
-			// javascript的return false只会阻止默认行为
-			//shanguagua.onclick = function(e){
-			//	return false;
-			//}
-			$('#shanguagua').on('click',function(){
-				return false
-			});
+			// 处理a标签的点击事件
+			shanguagua.onclick = function(e){
+				if ( e && e.stopPropagation ) {
+					//因此它支持W3C的stopPropagation()方法 
+				    e.stopPropagation(); 
+				}
+				else {
+					//否则，我们需要使用IE的方式来取消事件冒泡 
+				    window.event.cancelBubble = true; 
+				}
+			}
 		</script>
 	</body>
 </html>

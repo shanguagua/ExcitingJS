@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8" name="author" content="https://www.shanzhonglei.com/"/>
-		<title>事件捕获</title>
+		<title>事件冒泡</title>
 		<style type="text/css">
 			.grandfather {
 				width: 100%;
@@ -38,7 +38,7 @@
 	<body>
 		<div class="grandfather" id="grandfather">
 			<div class="father" id="father">
-				<div class="child" id="child">事件捕获：事件从最顶级元素向目标子元素逐级传递:<br>（document -> html -> body -> 父级元素 -> 目标div）</div>
+				<div class="child" id="child">事件冒泡：事件从目标子元素向父级元素逐级传递（目标div -> 父元素 —> body ->html ->document）</div>
 			</div>
 		</div>
 		<div class="result">
