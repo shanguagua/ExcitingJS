@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>事件冒泡</title>
+	</head>
+
+	<body>
+		<div id="parent" style="background-color: #000;height: 400px;width: 400px" data-id="444">
+			<div id="child" style="background-color: #fff;height: 200px;width: 200px" data-id="555"></div>
+		</div>
+		<script>
+			document.getElementById('parent').mouseup=function () {  
+    console.log(this.getAttribute('data-id'));  
+};  
+			document.getElementById('child').onclick = function() {
+				console.log(this.getAttribute('data-id'));
+			};
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" name="author" content="https://www.shanzhonglei.com/"/>
+		<title>阻止事件冒泡和默认事件</title>
+		<style type="text/css">
+			.container {
+				width: 100%;
+				height: 300px;
+				background-color: gold;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.result{
+				margin-top: 20px;
+				border: 1px solid salmon;
+				width: 300px;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container" id="father">
+			<a id="shanguagua" href="https://www.shanzhonglei.com/" target="_blank" style="margin: 20px;">山呱呱</a>  
+		</div>
+		<div class="result">
+			<p><<<——阻止事件冒泡,不阻止默认行为——>>></p>
+			<p>点击连接后:<br>1、链接会跳转；2、父容器事件不会被触发</p>
+			<ul id="result"></ul>
+		</div>
+		<script type="text/javascript">
+			var father = document.getElementById('father');
+			var result = document.getElementById('result');
+			var shanguagua = document.getElementById('shanguagua');
+			father.addEventListener('click', function(e) {
+				// js新建li元素，用于结果展示
+				let para = document.createElement('li');
+				let text = document.createTextNode("father元素事件被触发！__father");
+				para.appendChild(text);
+				result.appendChild(para);
+			})
+			
+			// 处理a标签的点击事件
+			shanguagua.onclick = function(e){
+				if ( e && e.stopPropagation ) {
+					//因此它支持W3C的stopPropagation()方法 
+				    e.stopPropagation(); 
+				}
+				else {
+					//否则，我们需要使用IE的方式来取消事件冒泡 
+				    window.event.cancelBubble = true; 
+				}
+			}
+		</script>
+	</body>
+</html>

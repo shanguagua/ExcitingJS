@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" name="author" content="https://www.shanzhonglei.com/"/>
+		<title>事件捕获</title>
+		<style type="text/css">
+			.grandfather {
+				width: 100%;
+				height: 300px;
+				background-color: gold;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.father{
+				width:80%;
+				height: 80%;
+				background-color: blue;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.child {
+				width: 60%;
+				height: 60%;
+				background-color: pink;
+			}
+			.result{
+				margin-top: 20px;
+				border: 1px solid salmon;
+				width: 300px;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="grandfather" id="grandfather">
+			<div class="father" id="father">
+				<div class="child" id="child">事件捕获：事件从最顶级元素向目标子元素逐级传递:<br>（document -> html -> body -> 父级元素 -> 目标div）</div>
+			</div>
+		</div>
+		
+		<div class="result">
+			<p>粉色为child，蓝色为father，金色grandfather</p>
+			<ul id="result"></ul>
+		</div>
+		<script type="text/javascript">
+			var grandfather = document.getElementById('grandfather');
+			var father = document.getElementById('father');
+			var child = document.getElementById('child');
+			var result = document.getElementById('result');
+			// click事件冒泡时触发(useCapture参数为false)
+			grandfather.addEventListener('click', function(e) {
+				// js新建li元素，用于结果展示
+				let para = document.createElement('li');
+				let text = document.createTextNode("grandfather元素事件被触发！__grandfather");
+				para.appendChild(text);
+				result.appendChild(para);
+			}, true)
+			
+			father.addEventListener('click', function(e) {
+				// js新建li元素，用于结果展示
+				let para = document.createElement('li');
+				let text = document.createTextNode("father元素事件被触发！__father");
+				para.appendChild(text);
+				result.appendChild(para);
+				// e.stopPropagation()    // 阻止事件冒泡
+			}, true)
+			
+			child.addEventListener('click', function(e) {
+				// js新建li元素，用于结果展示
+				let para = document.createElement('li');
+				let text = document.createTextNode("child元素事件被触发!__Child");
+				para.appendChild(text);
+				result.appendChild(para);
+				
+			}, true)
+		</script>
+	</body>
+
+</html>
